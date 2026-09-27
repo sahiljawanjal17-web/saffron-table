@@ -1,0 +1,99 @@
+{
+  "openrouterBaseUrl": "https://openrouter.ai/api/v1",
+  "aiCreditBaseUrl": "https://api.aicredits.in/v1",
+  "budgetLimitInr": 40.0,
+  "budgetWarnAtInr": 30.0,
+  "taskModelMap": {
+    "data_sample_read": "free_reasoning_primary",
+    "algorithm_decision": "paid_reasoning_primary",
+    "write_code": "free_coding_primary"
+  },
+  "models": [
+    {
+      "key": "free_reasoning_primary",
+      "display_name": "NVIDIA Nemotron 3 Ultra (free)",
+      "model_id": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "provider": "openrouter",
+      "category": "reasoning",
+      "is_free": true,
+      "cost_input_per_1m_inr": 0.0,
+      "cost_output_per_1m_inr": 0.0,
+      "context_window": 262000,
+      "default_max_tokens": 8000,
+      "purpose": "Sample data (30-40 rows) padhna, pehla-pass EDA samajhna, broad/multi-step planning. 1M context.",
+      "role": "primary"
+    },
+    {
+      "key": "free_reasoning_backup",
+      "display_name": "NVIDIA Nemotron 3 Super (free)",
+      "model_id": "nvidia/nemotron-3-super-120b-a12b:free",
+      "provider": "openrouter",
+      "category": "reasoning",
+      "is_free": true,
+      "cost_input_per_1m_inr": 0.0,
+      "cost_output_per_1m_inr": 0.0,
+      "context_window": 262000,
+      "default_max_tokens": 8000,
+      "purpose": "free_reasoning_primary fail/slow ho to backup. Multi-agent tasks ke liye tuned, 1M context.",
+      "role": "backup",
+      "backup_for": "free_reasoning_primary"
+    },
+    {
+      "key": "free_coding_primary",
+      "display_name": "Poolside: Laguna S 2.1 (free)",
+      "model_id": "poolside/laguna-s-2.1:free",
+      "provider": "openrouter",
+      "category": "coding",
+      "is_free": true,
+      "cost_input_per_1m_inr": 0.0,
+      "cost_output_per_1m_inr": 0.0,
+      "context_window": 262000,
+      "default_max_tokens": 16000,
+      "purpose": "Final notebook/model code likhna (comments + markdown ke saath). Benchmarked coding agent — 70.2% Terminal-Bench, 40.4% SWE-bench. 262K context.",
+      "role": "primary"
+    },
+    {
+      "key": "free_coding_backup",
+      "display_name": "Cohere: North Mini Code (free)",
+      "model_id": "cohere/north-mini-code:free",
+      "provider": "openrouter",
+      "category": "coding",
+      "is_free": true,
+      "cost_input_per_1m_inr": 0.0,
+      "cost_output_per_1m_inr": 0.0,
+      "context_window": 256000,
+      "default_max_tokens": 16000,
+      "purpose": "free_coding_primary fail ho to backup. Agentic code-gen, 256K context, 64K output tokens.",
+      "role": "backup",
+      "backup_for": "free_coding_primary"
+    },
+    {
+      "key": "paid_reasoning_primary",
+      "display_name": "DeepSeek R1 Distill Llama 70B (paid)",
+      "model_id": "deepseek/deepseek-r1-distill-llama-70b",
+      "provider": "openrouter",
+      "category": "reasoning",
+      "is_free": false,
+      "cost_input_per_1m_inr": 80.31,
+      "cost_output_per_1m_inr": 80.31,
+      "context_window": 8000,
+      "default_max_tokens": 4000,
+      "purpose": "SABSE IMPORTANT STEP: final ML algorithm decision. R1-lineage distilled model (Llama-70B base) — deep structured reasoning, same R1-distillation family as the old broken model. Cost still negligible for one call (~Rs 0.01-0.05 for a short prompt).",
+      "role": "primary_for_critical_decision"
+    },
+    {
+      "key": "paid_coding_backup",
+      "display_name": "Qwen2.5 Coder 32B Instruct (paid)",
+      "model_id": "qwen/qwen-2.5-coder-32b-instruct",
+      "provider": "openrouter",
+      "category": "coding",
+      "is_free": false,
+      "cost_input_per_1m_inr": 66.25,
+      "cost_output_per_1m_inr": 100.38,
+      "context_window": 33000,
+      "default_max_tokens": 10000,
+      "purpose": "Last-resort coding backup — sirf tab jab dono free coding models (primary + backup) fail ho jaayein.",
+      "role": "last_resort"
+    }
+  ]
+}

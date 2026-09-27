@@ -1,0 +1,16 @@
+/* Base typography from chef-kitchen (MIT) globals.css, scoped to the public site. */
+.site h1 {
+  @apply text-foreground text-5xl sm:text-6xl md:text-7xl;
+}
+
+.site h2 {
+  @apply text-foreground text-4xl leading-11 sm:text-5xl sm:leading-14;
+}
+
+.site .container {
+  @apply mx-auto w-full max-w-7xl px-4;
+}
+
+html {
+  scroll-behavior: smooth;
+}
